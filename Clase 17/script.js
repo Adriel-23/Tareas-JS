@@ -54,8 +54,7 @@ if (!numero || isNaN(numero)) {
             - Válidar el número de descuento (El número debe ser positivo y menor que 100)
                 - Volver a solicitar en caso de ser incorrecto.
                 - Mostrar por alerta el porcentaje del número ingresado. Ej:  "El precio con descuento aplicado es de ${Resultado}"
-    *
-
+    */
 
 
     
