@@ -117,7 +117,7 @@ else {
 
 
 
-/* let operacion = prompt ("Qué operación desea realizar?(suma, resta, multiplicar, dividir, iva, promediar trimestre, mayor o menos que, porcentaje)(+, -, *, ., /, ptr, <, >, %)")
+let operacion = prompt ("Qué operación desea realizar?: \nsuma (+) \nresta (-) \nmultiplicar (*) \ndividir (/) \niva \npromediar trimestre (ptr) \nmayor o menos que (>, <) \nporcentaje  (%)")
 if (operacion === "+" || operacion =="sumar"|| operacion === "-" || operacion =="restar" || operacion === "*" || operacion =="multiplicar" || operacion =="." || operacion === "/" || operacion =="dividir" || operacion ==":") {
     let numero1 = prompt ("Ingrese el primer número")
         if (isNaN(numero1) || !numero1){
@@ -223,4 +223,4 @@ else if (operacion == "porcentaje" || operacion == "%"){
     }
 else {
     alert ("Operación inválida")
-} */
+}
