@@ -122,7 +122,7 @@ while (!horas || isNaN(horas)){
 14)Definir una función esVocal que tome por parámetro un string letra y nos indique si letra es vocal o no lo es.
 */
 
-function esVocal(letra){
+/* function esVocal(letra){
     const a = "a";
     const e = "e";
     const i = "i";
@@ -139,7 +139,7 @@ let noEsVocal = "No es vocal"
 let siEsVocal = "Si es vocal"
 letra = prompt ("Ingrese una letra para verificar si es vocal o no")
 alert (esVocal(letra))
-
+ */
 
 
 
