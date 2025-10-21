@@ -18,67 +18,73 @@ REGLAS:
     - El carrito debe tener a cada producto con el formato {id: number, quantity: number} 
     - (Le agregué yo un nombre a los productos para que se vea mas lindo)*/
 
-    let shopping_cart=[]
+let shopping_cart = []
 
-    function agregarProductoAlCarrito(nombre_producto, id_product, quantity_product){
-        let product = {
-        nombre: nombre_producto,
+function agregarProductoAlCarrito(id_product, quantity_product) {
+    
+    for (let product of shopping_cart) {
+        if (id_product === product.id) {
+            product.quantity = product.quantity + Number(quantity_product)
+            return product
+        }
+    }
+    let product = {
         id: Number(id_product),
         quantity: Number(quantity_product),
-        }
-        for(let product of shopping_cart){
-            if(id_product === product.id){
-                product.quantity = product.quantity+Number(quantity_product)
-                return product
-            }   
-        }
-        shopping_cart.push(product)
     }
-    agregarProductoAlCarrito("S25 Ultra", 2, 5)
-    agregarProductoAlCarrito("S25", 3, 6)
-    agregarProductoAlCarrito("S25 Ultra", 2, 5)
-    agregarProductoAlCarrito("S25 Ultra", 4, 7)
+    shopping_cart.push(product)
+    return product
+}
 
 
-    
-
-
-    /* 
-    eliminarProductoPorId(id_producto, cantidad)
-    - Si el producto no esta debe retornara null
-    - Si esta:
-        -Si la cantidad a eliminar es mayor a la cantidad en carrito debera retornar null
+/* 
+eliminarProductoPorId(id_producto, cantidad)
+- Si el producto no esta debe retornara null
+- Si esta:
+    -Si la cantidad a eliminar es mayor a la cantidad en carrito debera retornar null
+    -SINO:
+        -Si la cantidad es exactamente la cantidad en el carrito debera eliminar el item del carrito
         -SINO:
-            -Si la cantidad es exactamente la cantidad en el carrito debera eliminar el item del carrito
-            -SINO:
-                - Decrementar la cantidad del item por la cantidad a restar
+            - Decrementar la cantidad del item por la cantidad a restar
 
 REGLAS:
-    - El carrito no puede tener 2 veces el mismo producto (osea con el mismo ID)
-    - El carrito debe tener a cada producto con el formato {id: number, quantity: number}
-    - El carrito no puede tener un item con cantidad negativa o 0
-    */
-
-    /* function verificarExistencia(id_product){
-        for(product of shopping_cart)
-    } */
-    function eliminarProductoPorId (id_product, quantity_product){
-        for(product of shopping_cart){
-            if (id_product === product.id)
-                if(quantity_product > product.quantity){
-                return null; 
-            }
-                else {
-            product.quantity = product.quantity-Number(quantity_product)
-            return product
-            }
+- El carrito no puede tener 2 veces el mismo producto (osea con el mismo ID)
+- El carrito debe tener a cada producto con el formato {id: number, quantity: number}
+- El carrito no puede tener un item con cantidad negativa o 0
+*/
+function findProduct(id_product){
+    for (let product of shopping_cart){
+        if(id_product===product.id){
+            return
         }
+    }
+    return null
+}
+
+function eliminarProductoPorId(id_product, quantity_product) {
+    const product_found = findProduct(id_product)
+    if (!product_found || product_found.quantity < quantity_product){
         return null
     }
+    if(product_found.quantity === quantity_product){
+        let indice_a_eliminar = shopping_cart.indexOf(product_found)
+        shopping_cart.splice(indice_a_eliminar, 1)
+        
+    }
+    if(product_found.quantity > quantity_product){
+        product_found.quantity = product_found.quantity - quantity_product
+    }
+    return product
+}
 
-    eliminarProductoPorId(2, 2)
-    eliminarProductoPorId(3, 9)
-    eliminarProductoPorId(4, 6)
 
-    console.log (shopping_cart)  
 
+agregarProductoAlCarrito(3, 10)
+
+eliminarProductoPorId(3, 3)
+
+
+console.log(eliminarProductoPorId(3, 3))
+
+
+console.log(shopping_cart) 
