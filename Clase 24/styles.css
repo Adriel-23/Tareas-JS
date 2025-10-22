@@ -111,3 +111,35 @@ h2 {
     font-size: 32px;
     color: rgb(36, 99, 17);
 }
+
+.modal-container{
+    z-index: 100;
+            position: fixed;
+            top: 0;
+            left:0; 
+            width: 100vw;        
+            height: 100vh;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.34);
+        }
+        .modal{
+            width: 300px;
+            height: 150px;
+            border-radius: 15px;
+            background-color: white;
+            padding: 15px;
+            position: relative;
+        }
+
+        .btn-close{
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+
+        .close{
+            display: none;
+        }

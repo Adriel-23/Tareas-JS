@@ -28,6 +28,10 @@ const cart = [
         quantity: 1
     }
 ]
+const modalContainer = document.querySelector('.modal-container')
+const btnCloseModal = document.querySelector('.btn-close')
+const modal = document.querySelector('.modal-content')
+
 const cartContainer = document.getElementById("shoppingCart");
 const totalCartPrice = document.getElementById("total");
 function renderCartItems() {
@@ -86,10 +90,20 @@ const clearCartbutton = document.getElementById("clearButton");
         renderCartItems();
     });
 function deleteItem(event) {
-    const button_clicked = event.target;
-    const product_id = Number(button_clicked.dataset.product_id);
-    deleteItemById(product_id);
-    renderCartItems();
+    try {
+        if (determinarExito(80)) {
+            const button_clicked = event.target;
+            const product_id = Number(button_clicked.dataset.product_id);
+            deleteItemById(product_id);
+            renderCartItems();
+        }
+        else {
+            throw new Error("No has podido eliminar el producto del carrito");
+        }
+    }
+    catch (error) {
+        renderModal("Fallo del servidor", error.message);
+    }
 }
 function deleteItemById(product_id) {
     const i = cart.findIndex( item => item.id === product_id);
@@ -103,22 +117,44 @@ function clearCart() {
 }
 
 function incrementItemQuantity(event) {
-    const button_clicked = event.target;
-    const product_id = Number(button_clicked.dataset.product_id);
-    const button_selected = findItemFromCartById(product_id);
-    button_selected.quantity = button_selected.quantity + 1;
-    renderCartItems();
-}
-function decrementItemQuantity(event) {
-    const button_clicked = event.target;
-    const product_id = Number(button_clicked.dataset.product_id);
-    const button_selected = findItemFromCartById(product_id);
-    button_selected.quantity = button_selected.quantity - 1;
-    if (button_selected.quantity <= 0) {
-        deleteItemById(product_id);
+    try {
+        if (determinarExito(10)) {
+            const button_clicked = event.target;
+            const product_id = Number(button_clicked.dataset.product_id);
+            const button_selected = findItemFromCartById(product_id);
+            button_selected.quantity = button_selected.quantity + 1;
+            renderCartItems();
+        }
+        else {
+            throw new Error("No has podido agregar el producto al carrito");
+        }
     }
-    renderCartItems();
+    catch (error) {
+        renderModal("Fallo del servidor", error.message);
+    }
 }
+
+function decrementItemQuantity(event) {
+    try {
+        if (determinarExito(30)) {
+            const button_clicked = event.target;
+            const product_id = Number(button_clicked.dataset.product_id);
+            const button_selected = findItemFromCartById(product_id);
+            button_selected.quantity = button_selected.quantity - 1;
+            if (button_selected.quantity <= 0) {
+                deleteItemById(product_id);
+            }
+            renderCartItems();
+        }
+        else {
+            throw new Error("No has podido quitar el producto del carrito");
+        }
+    }
+    catch (error) {
+        renderModal("Fallo del servidor", error.message);
+    }
+}
+
 function findItemFromCartById(product_id) {
     for(let item of cart){
         if(item.id === product_id){
@@ -127,6 +163,7 @@ function findItemFromCartById(product_id) {
     }
     return null;
 }
+
 function getTotalCartPrice(){
     let total = 0;
     for(let item of cart){
@@ -135,5 +172,54 @@ function getTotalCartPrice(){
     }
     return total;
 }
+
+function determinarExito (porcentaje) {
+    const factor_porcentaje = porcentaje / 100
+    const numero_random = Math.random() //Es un numero del 1 al 0
+    return factor_porcentaje > numero_random
+}
+
+
+function renderModal(title, text){
+    modal.innerHTML =`
+    <h3>${title}</h3>
+    <p>${text}</p>
+    `
+    handleOpenModal()
+}
+
+function handleOpenModal() {
+    //Eliminar la clase close de modalContainer
+    modalContainer.classList.remove('close')
+}
+
+function handleCloseModal() {
+    //agrega la clase close de modalContainer
+    modalContainer.classList.add('close')
+}
+
+btnCloseModal.addEventListener(
+    'click',
+    handleCloseModal
+)
+
 renderCartItems();
+
+/* 
+- incrementar tasa-fallo: 10%
+- decrementar tasa-fallo: 30%
+- eliminar    tasa-fallo: 80%
+
+Cuando incrementar falle deberas mostrar el modal de fallo: 
+    Titulo: Fallo del servidor
+    texto:  no has podido agregar el producto al carrito
+
+Cuando decrementar falle deberas mostrar el modal de fallo: 
+    Titulo: Fallo del servidor
+    texto:  no has podido quitar el producto del carrito
+
+Cuando eliminar falle deberas mostrar el modal de fallo: 
+    Titulo: Fallo del servidor
+    texto:  no has podido eliminar el producto del carrito
+*/
 
