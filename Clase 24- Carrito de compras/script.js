@@ -1,5 +1,5 @@
-const cart = [
-    { 
+const cart = [];
+    /* { 
         id: 1, 
         title: "Mouse Gamer HyperX Pulsefire FPS Pro Negro", 
         price: 220000,
@@ -27,11 +27,12 @@ const cart = [
         attachments: ["assets/microfono.webp"],
         quantity: 1
     }
-]
+] */
 const modalContainer = document.querySelector('.modal-container')
 const btnCloseModal = document.querySelector('.btn-close')
+const btnRetryLoad = document.querySelector('.retry')
 const modal = document.querySelector('.modal-content')
-
+const spinner = document.querySelector('.spinner')
 const cartContainer = document.getElementById("shoppingCart");
 const totalCartPrice = document.getElementById("total");
 function renderCartItems() {
@@ -91,7 +92,7 @@ const clearCartbutton = document.getElementById("clearButton");
     });
 function deleteItem(event) {
     try {
-        if (determinarExito(80)) {
+        if (!determinarExito(80)) {
             const button_clicked = event.target;
             const product_id = Number(button_clicked.dataset.product_id);
             deleteItemById(product_id);
@@ -118,7 +119,7 @@ function clearCart() {
 
 function incrementItemQuantity(event) {
     try {
-        if (determinarExito(10)) {
+        if (!determinarExito(10)) {
             const button_clicked = event.target;
             const product_id = Number(button_clicked.dataset.product_id);
             const button_selected = findItemFromCartById(product_id);
@@ -136,7 +137,7 @@ function incrementItemQuantity(event) {
 
 function decrementItemQuantity(event) {
     try {
-        if (determinarExito(30)) {
+        if (!determinarExito(30)) {
             const button_clicked = event.target;
             const product_id = Number(button_clicked.dataset.product_id);
             const button_selected = findItemFromCartById(product_id);
@@ -185,7 +186,7 @@ function renderModal(title, text){
     <h3>${title}</h3>
     <p>${text}</p>
     `
-    handleOpenModal()
+    handleOpenModal();
 }
 
 function handleOpenModal() {
@@ -203,7 +204,74 @@ btnCloseModal.addEventListener(
     handleCloseModal
 )
 
-renderCartItems();
+function hideSpinner() {
+    //Eliminar la clase hide de spinner
+    spinner.classList.add('close')
+}
+
+btnRetryLoad.addEventListener(
+    'click', () =>{
+    handleCloseModal();
+    simulateServerLoad();
+    }
+)
+
+
+function simulateServerLoad() {
+                const serverDataCart = [
+            { 
+                id: 1, 
+                title: "Mouse Gamer HyperX Pulsefire FPS Pro Negro", 
+                price: 220000,
+                attachments: ["assets/mouse.png"],
+                quantity: 1 
+            },
+            { 
+                id: 2, 
+                title: "Audifonos Astro A10", 
+                price: 147000, 
+                attachments: ["assets/astro-a10.png"],
+                quantity: 2 
+            },
+            { 
+                id: 3, 
+                title: 'Monitor Samsung 22" FHD 75Hz Bordes Ultradelgados', 
+                price: 171000, 
+                attachments: ["assets/monitor.avif"],
+                quantity: 1 
+            },
+            { 
+                id: 4, 
+                title: "Microfono HyperX SoloCast Black", 
+                price: 178000, 
+                attachments: ["assets/microfono.webp"],
+                quantity: 1
+            }
+                ]
+                
+                setTimeout(
+                    function() {
+                    try {
+                        if (!determinarExito(50)){
+                            hideSpinner()
+                            for (const item of serverDataCart) {
+                                cart.push(item);
+                            }
+                            renderCartItems();
+                        }
+                        else {
+                            throw new Error("Lo sentimos. No se ha Podido Cargar el Carrito de Compras");
+                        }
+                    }
+                    catch (error) {
+                        renderModal("Fallo del servidor", error.message);
+                    }
+                }, 
+                2000
+            )
+        }
+simulateServerLoad();
+
 
 /* 
 - incrementar tasa-fallo: 10%
@@ -223,3 +291,13 @@ Cuando eliminar falle deberas mostrar el modal de fallo:
     texto:  no has podido eliminar el producto del carrito
 */
 
+/* 
+Emulando una consulta al servidor
+- El carrito tardara 2 segundos en cargarse, al finalizar la carga, renderizar el carrito
+- Si se esta cargando debera mostrar un cargando en la pantalla
+- OPCIONAL: Habra una tasa de exito del 70%, si falla la carga de carrito, lanzar en la PANTALLA donde mostramos el carrito, 'no se pudo cargar el carrito' con un boton de reintentar 
+- Opcional: El boton de reintentar debera volver a intentar obtener la lista de el server (con los 2 segundos y la pantalla de carga) (OJO QUE PUEDE VOLVER A FALLAR.)
+RECOMENDACION PERSONAL:
+- Tengan un estado global de cargando, donde si cargando es verdadero, se muestre la pantalla de carga
+- Alternativa, tengan una funcion llamada renderLoader que renderize el cargando y unmountLoader elimine el loader
+*/
