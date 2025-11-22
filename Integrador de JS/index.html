@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Hurto Mercado</title>
+        <script src="/app.js" defer></script>
+        <link rel="stylesheet" href="/styles.css">
+    </head>
+    <body>
+        <!-- Error content -->
+        <div id="error-container" class="hidden">
+            <div class="error-content">
+                <p id="error-message"></p>
+                <div class="error-buttons-container">
+                    
+                    <button id="retry-button" class="error-buttons">
+                        Reintentar
+                    </button>
+                    
+                    <button id="close-error-button" class="error-buttons">
+                        Cerrar
+                    </button>
+                    
+                </div>
+            </div>
+        </div>
+        <!-- Loader content-->
+        <div id="loader-container">
+            <div class="loader hidden">
+            </div>
+        </div>
+        <!-- Header (Nav Bar) content -->
+        <header>
+            <!-- Nav Bar content -->
+            <div id="header-content">
+                <div id="logo-image-container">
+                    <h1 id="logo">BayiMercado</h1>
+                    <span id="logo-image"><img src="./images/LokiPixelArt.png"  alt="Logo de la empresa"></span>
+                </div>
+                <button id="cart-icon"><svg xmlns="http://www.w3.org/2000/svg"
+                    width="48" height="48" fill="var(--secondary-color)" class="bi bi-basket2" viewBox="0 0 16 16">
+                    <path d="M4 10a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0zm3 0a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0zm3 0a1 1 0 1 1 2 0v2a1 1 0 0 1-2 0z"/>
+                    <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-.623l-1.844 6.456a.75.75 0 0 1-.722.544H3.69a.75.75 0 0 1-.722-.544L1.123 8H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6h1.717L5.07 1.243a.5.5 0 0 1 .686-.172zM2.163 8l1.714 6h8.246l1.714-6z"/>
+                </svg>
+            </button>
+        </div>
+        <!-- Cart Container -->
+        <div id="cart-container" class="hidden">
+            <div id="products-in-cart">
+                
+            </div>
+            <p id="total-cart-price"></p>
+            <div id="cart-buttons-container">
+                <button id="clear-cart-button" class="hidden">Vaciar carrito</button>
+                <button id="purchase-button" class="hidden">Finalizar Compra</button>
+            </div>
+        </div>
+    </header>
+    <div id="stock-error-container" class="hidden">
+        <div class="stock-error-content">
+            <p id="stock-error-message"></p>
+            <div class="stock-error-buttons-container">
+                <button id="close-stock-error-button" class="error-buttons">
+                    Aceptar
+                </button>
+            </div>
+        </div>
+    
+    </div>
+    <!-- Products Content -->
+    
+    <div id="products-container">
+        
+    </div>
+    
+    <!-- Not Stock alert  -->
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tensor Flow</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd" defer> </script>
+    <script src="./scripts.js" defer></script>
+    <link rel="stylesheet" href="./styles.css">
+
+</head>
+<body>
+    <h1>Sos un ser humano?</h1>
+    <label>Seleciona tu imagen</label>
+    <input type="file" accept="image/*" id="image-imput">
+    
+        <div id="image-preview-container">
+            <img id="image-preview">
+        </div>
+    <button id="execute-model">Clasificar</button>
+</body>
+</html> 
